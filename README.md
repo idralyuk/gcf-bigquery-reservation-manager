@@ -1,6 +1,6 @@
-# Google Cloud Function to manage BigQuery Reservations.
+## Google Cloud Function to manage BigQuery Reservations.
 
-## How to deploy gcf-bigquery-reservation-manager
+### How to deploy gcf-bigquery-reservation-manager
 
   Set up some variables
   
@@ -35,3 +35,29 @@
   
     gcloud --project ${GCP_PROJECT} functions add-iam-policy-binding bq-reservation-manager --region=${GCP_REGION} --member=serviceAccount:${GCP_SERVICE_ACCOUNT}@${GCP_PROJECT}.iam.gserviceaccount.com --role=roles/cloudfunctions.invoker
 
+## How to invoke
+
+  POST the following to retrieve a report of current capacity commitments, reservations and assignments
+
+    {
+        "operation": "report",
+        "project_id": "foobar",
+        "location": "EU"
+    }
+
+  POST the following to remove all current capacity commitments, reservations and assignments
+
+    {
+        "operation": "cleanup",
+        "project_id": "foobar",
+        "location": "EU"
+    }
+
+  POST the following to purchase a capacity commitment, and create a reservation and an assignment
+
+    {
+        "operation": "purchase",
+        "project_id": "foobar",
+        "location": "EU",
+        "slots": 400
+    }
